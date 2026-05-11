@@ -1,0 +1,52 @@
+services:
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    restart: always
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./web:/var/www/html
+
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+
+    depends_on:
+      - db
+
+
+  git:
+    image: alpine/git
+    container_name: git-sync
+
+    volumes:
+      - ./:/repo
+
+    working_dir: /repo
+
+    entrypoint: /bin/sh
+
+    command: -c "git config --global --add safe.directory /repo && git pull"
+
+volumes:
+  db_data:

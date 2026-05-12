@@ -46,7 +46,7 @@ services:
 
     entrypoint: /bin/sh
 
-    command: -c "git config --global --add safe.directory /repo && git pull"
+    command: -c "git config --global --add safe.directory /repo && git pull proyecto master"
 
 volumes:
   db_data:

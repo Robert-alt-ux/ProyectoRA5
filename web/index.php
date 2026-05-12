@@ -1,3 +1,3 @@
 <?php
-echo "<h1>Presentacion</h1>";
+echo "<h1>Proyecto completamente funcional</h1>";
 ?>
